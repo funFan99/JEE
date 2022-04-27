@@ -13,13 +13,12 @@
 </head>
 <body>
 	
-	<form action= "login"  method="post">
+	<form action= ""  method="post">
 		
 		
-		<input type=text name=login placeholder="Email" /><br>
-		<input type=password name=password placeholder="Password" /><br>
-		<nav style="text-align: right;"><a href = "rewatch">Disc</a></nav>		
-		<input type=submit value="IN"  />
+		<input type=text name=email placeholder="Email" /><br>
+		<input type=password name=password placeholder="Password" /><br>		
+		<input type=submit value="ajouter"  />
 	</form>
 </body>
 </html>

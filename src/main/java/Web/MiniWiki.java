@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +24,8 @@ import Model.JsonClient;
 				"/list",
 				"/login",
 				"/register",
-				"/logout"
+				"/logout",
+				"/rewatch"
 		})
 public class MiniWiki extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -65,6 +67,9 @@ public class MiniWiki extends HttpServlet {
 					jc.put("http://127.0.0.1:8000/api/session/"+em, job.build().toString());
 					ss.invalidate();
 					response.sendRedirect("login");
+					break;
+				case"/rewatch":
+					this.getServletContext().getRequestDispatcher("/Rematch.jsp").forward(request, response);
 					break;
 					
 			}
@@ -112,6 +117,24 @@ public class MiniWiki extends HttpServlet {
 					response.sendRedirect("list");
 					}
 			}
+				break;
+			case "/rewatch":
+				if(request.getParameter("email") != null && request.getParameter("password") != null){
+					PrintWriter out = response.getWriter();
+					System.out.println(request.getParameter("email"));
+					String jj =	jc.get("http://127.0.0.1:8000/api/user/"+request.getParameter("email"));
+					System.out.println(jj);
+					if(jj.equals("[]")) {
+						out.println("email not found !");
+						
+				}else {
+					
+					JsonObjectBuilder job = Json.createObjectBuilder();
+					job.add("password", request.getParameter("password"));
+					jc.put("http://127.0.0.1:8000/api/rewatch/"+request.getParameter("email"), job.build().toString());
+					response.sendRedirect("login");
+				}
+				}
 				break;
 			
 			}
